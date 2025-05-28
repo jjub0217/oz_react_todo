@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const usePost = (url) => {
   const [response, setResponse] = useState(null);
@@ -10,10 +10,11 @@ const usePost = (url) => {
     try {
       const res = await fetch(url, {
         method: "post",
-        body: data,
+        body: JSON.stringify(data),
       });
       const result = await res.json();
       setResponse(result);
+      return result;
     } catch (err) {
       setError(err);
     } finally {
@@ -21,9 +22,6 @@ const usePost = (url) => {
     }
   };
 
-  useEffect(() => {
-    sendData();
-  }, [url]);
   return { sendData, isLoading, response, error };
 };
 export default usePost;

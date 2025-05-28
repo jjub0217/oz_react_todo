@@ -1,11 +1,13 @@
 import { useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const TodoInput = ({ addTodo }) => {
   const inputRef = useRef(null);
 
   const handleAdd = () => {
-    const newContent = { id: uuidv4(), content: inputRef.current.value };
+    const newContent = {
+      content: inputRef.current.value,
+      time: 0,
+    };
     addTodo(newContent);
     inputRef.current.value = "";
     inputRef.current.focus();

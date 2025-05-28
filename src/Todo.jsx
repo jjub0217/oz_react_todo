@@ -1,8 +1,14 @@
-const Todo = ({ todo, removeTodo }) => {
+import { formatTime } from "./utils/formatTime";
+
+const Todo = ({ todo, removeTodo, handleSelectTodo }) => {
   return (
     <li>
-      {todo.content}
-      {/* <button onClick={handleTodoFetch}>수정</button> */}
+      <div>
+        {todo.content}
+        <br />
+        {formatTime(todo.time)}
+      </div>
+      <button onClick={() => handleSelectTodo(todo.id)}>시작하기</button>
       <button
         onClick={() => {
           removeTodo(todo.id);

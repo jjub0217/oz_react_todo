@@ -32,16 +32,11 @@ const Timer = () => {
     return () => clearInterval(intervalRef.current);
   }, [isRunning]);
 
-  const handleStart = () => {
-    // console.log(startTime); // 570
+  const handleRange = (e) => {
+    setStartTime(Number(e.target.value));
+  };
 
-    // if (startTime > 0) {
-    //   // 타이머를 실행 상태로 변경.
-    //   setIsRunning(true);
-    //   // 타이머를 startTime 값부터 시작하도록 변경.
-    //   setElapsedTime(startTime);
-    //   setStartTime(0)
-    // }
+  const handleStart = () => {
     if (elapsedTime) {
       setIsRunning((prev) => !prev); // 일시정지 or 다시 시작
     } else if (startTime > 0) {
@@ -58,10 +53,6 @@ const Timer = () => {
     setIsRunning(false);
   };
 
-  const handleRange = (e) => {
-    setStartTime(Number(e.target.value));
-  };
-
   return (
     <>
       <p>
@@ -71,12 +62,11 @@ const Timer = () => {
       </p>
       <button onClick={handleStart}>{!isRunning ? "시작" : "일시정지"}</button>
       <button onClick={handleReset}>리셋</button>
-
       <input
         type="range"
         min="0"
         max="3600"
-        value={isRunning ? elapsedTime : startTime}
+        value={elapsedTime ? elapsedTime : startTime}
         step="30"
         onChange={handleRange}
       />

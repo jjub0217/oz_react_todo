@@ -1,12 +1,8 @@
-import useFetch from "./useFetch";
+import useFetch from "./useGet";
 const Advice = () => {
   const { isLoading, data, error } = useFetch(
     "https://korean-advice-open-api.vercel.app/api/advice"
   );
-
-  console.log(isLoading);
-  console.log(data);
-  console.log(error);
 
   // useEffect(() => {
   //   if (isRunning) {

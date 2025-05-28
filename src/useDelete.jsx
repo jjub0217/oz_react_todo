@@ -1,17 +1,16 @@
 import { useState } from "react";
 
-const useFetch = () => {
+const useDelete = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const patchData = async (url, updatedFields) => {
+  const deleteData = async (url) => {
     setIsLoading(true);
     try {
       const res = await fetch(url, {
-        method: "PATCH",
-        body: JSON.stringify(updatedFields),
+        method: "delete",
       });
-      if (!res.ok) throw new Error("업데이트 실패");
+      if (!res.ok) throw new Error("삭제 실패");
     } catch (err) {
       setError(err);
     } finally {
@@ -19,6 +18,6 @@ const useFetch = () => {
     }
   };
 
-  return { patchData, isLoading, error };
+  return { deleteData, isLoading, error };
 };
-export default useFetch;
+export default useDelete;
