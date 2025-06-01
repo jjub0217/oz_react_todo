@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const usePost = (url) => {
   const [response, setResponse] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const sendData = async (data) => {
@@ -12,11 +12,13 @@ const usePost = (url) => {
         method: "post",
         body: JSON.stringify(data),
       });
+      if (!res.ok) throw new Error("서버 응답 오류");
       const result = await res.json();
       setResponse(result);
       return result;
     } catch (err) {
       setError(err);
+      throw err;
     } finally {
       setIsLoading(false);
     }

@@ -5,7 +5,7 @@ const StopWatch = ({
   elapsedTime,
   setElapsedTime,
   selectedTodoId,
-  updateFetchTimeForTodo,
+  updateTodoTime,
 }) => {
   // 1시간 : 3600초 (60초가 60개)
   // 1분 : 60초
@@ -21,7 +21,7 @@ const StopWatch = ({
           const updated = prev + 1;
           // 부모에게 실시간 전달
           if (selectedTodoId) {
-            updateFetchTimeForTodo(selectedTodoId, updated);
+            updateTodoTime(selectedTodoId, updated);
           }
           return updated;
         });
@@ -29,7 +29,7 @@ const StopWatch = ({
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isRunning]);
+  }, [isRunning, selectedTodoId, updateTodoTime]);
 
   const handleStartStop = () => {
     setIsRunning((prev) => !prev);
@@ -44,7 +44,9 @@ const StopWatch = ({
   return (
     <>
       <h1>{formatTime(elapsedTime, true)}</h1>
-      <button onClick={handleStartStop}>{isRunning ? "끄기" : "켜기"}</button>
+      <button onClick={handleStartStop}>
+        {isRunning ? "일시정지" : "시작"}
+      </button>
       <button onClick={handleReset}>리셋</button>
     </>
   );

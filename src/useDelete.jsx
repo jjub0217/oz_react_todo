@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const useDelete = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const deleteData = async (url) => {
@@ -11,6 +11,7 @@ const useDelete = () => {
         method: "delete",
       });
       if (!res.ok) throw new Error("삭제 실패");
+      return true;
     } catch (err) {
       setError(err);
     } finally {

@@ -65,6 +65,6 @@ li > div:last-child {
   padding: 0 40px;
 }
 
-.selectedTodoId {
+.selected {
   background-color: rgb(230, 234, 255);
 } /*# sourceMappingURL=App.css.map */

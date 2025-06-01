@@ -4,7 +4,7 @@ const Timer = ({
   elapsedTime,
   setElapsedTime,
   selectedTodoId,
-  updateFetchTimeForTodo,
+  updateTodoTime,
 }) => {
   // 내가 30초로 설정하면.
   // 30초 부터 시작해서
@@ -24,13 +24,16 @@ const Timer = ({
     if (isRunning) {
       intervalRef.current = setInterval(() => {
         setElapsedTime((prev) => {
-          if (prev >= 1) {
+          if (prev > 1) {
+            const updated = prev - 1;
             if (selectedTodoId) {
-              const updated = prev + 1;
-              updateFetchTimeForTodo(selectedTodoId, updated);
+              updateTodoTime(selectedTodoId, updated);
             }
-            return prev - 1;
+            return updated;
           } else {
+            if (selectedTodoId) {
+              updateTodoTime(selectedTodoId, 0);
+            }
             clearInterval(intervalRef.current);
             setIsRunning(false);
             setStartTime(0);
@@ -40,26 +43,36 @@ const Timer = ({
       }, 1000);
     }
     return () => clearInterval(intervalRef.current);
-  }, [isRunning]);
+  }, [isRunning, selectedTodoId, updateTodoTime]);
 
   const handleRange = (e) => {
     setStartTime(Number(e.target.value));
   };
 
   const handleStart = () => {
-    if (elapsedTime) {
-      setIsRunning((prev) => !prev); // 일시정지 or 다시 시작
+    // if (elapsedTime) {
+    //   setIsRunning((prev) => !prev); // 일시정지 or 다시 시작
+    // } else if (startTime > 0) {
+    //   // 타이머를 실행 상태로 변경.
+    //   setIsRunning(true);
+    //   // 타이머를 startTime 값부터 시작하도록 변경.
+    //   setElapsedTime(startTime); // 처음 시작
+    //   setStartTime(0);
+    // }
+    if (isRunning) {
+      setIsRunning(false); // 일시정지
+    } else if (elapsedTime > 0) {
+      setIsRunning(true); // 다시 시작
     } else if (startTime > 0) {
-      // 타이머를 실행 상태로 변경.
-      setIsRunning(true);
-      // 타이머를 startTime 값부터 시작하도록 변경.
       setElapsedTime(startTime); // 처음 시작
       setStartTime(0);
+      setIsRunning(true);
     }
   };
 
   const handleReset = () => {
     setStartTime(0);
+    setElapsedTime(0);
     setIsRunning(false);
   };
 

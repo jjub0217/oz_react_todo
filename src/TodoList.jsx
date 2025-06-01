@@ -12,7 +12,7 @@ const TodoList = ({
         <Todo
           key={todo.id}
           todo={todo}
-          selectedTodoId={selectedTodoId}
+          isSelected={todo.id === selectedTodoId}
           removeTodo={removeTodo}
           handleSelectTodo={handleSelectTodo}
         />

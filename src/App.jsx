@@ -47,7 +47,7 @@ function App() {
     setIsStopwatch((prev) => !prev);
   };
 
-  const updateFetchTimeForTodo = (selectedTodoId, updatedTime) => {
+  const updateTodoTime = (selectedTodoId, updatedTime) => {
     patchData(`http://localhost:3000/todo/${selectedTodoId}`, {
       time: updatedTime,
     });
@@ -68,7 +68,7 @@ function App() {
     if (data) {
       setTodoList(data);
     }
-  }, [isLoading]);
+  }, [data]);
 
   useEffect(() => {
     setElapsedTime(0);
@@ -85,14 +85,14 @@ function App() {
           elapsedTime={elapsedTime}
           setElapsedTime={setElapsedTime}
           selectedTodoId={selectedTodoId}
-          updateFetchTimeForTodo={updateFetchTimeForTodo}
+          updateTodoTime={updateTodoTime}
         />
       ) : (
         <Timer
           elapsedTime={elapsedTime}
           setElapsedTime={setElapsedTime}
           selectedTodoId={selectedTodoId}
-          updateFetchTimeForTodo={updateFetchTimeForTodo}
+          updateTodoTime={updateTodoTime}
         />
       )}
       <TodoInput addTodo={addTodo} />
