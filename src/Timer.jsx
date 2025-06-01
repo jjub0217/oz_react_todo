@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { formatTime } from "./utils/formatTime";
-const Timer = () => {
+const Timer = ({
+  elapsedTime,
+  setElapsedTime,
+  selectedTodoId,
+  updateFetchTimeForTodo,
+}) => {
   // 내가 30초로 설정하면.
   // 30초 부터 시작해서
   // 0초가 지난 후에 알람
@@ -10,7 +15,7 @@ const Timer = () => {
   const [startTime, setStartTime] = useState(0);
 
   // 보여줄 경과시간
-  const [elapsedTime, setElapsedTime] = useState(0);
+  // const [elapsedTime, setElapsedTime] = useState(0);
 
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
@@ -19,13 +24,18 @@ const Timer = () => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
         setElapsedTime((prev) => {
-          if (prev <= 1) {
+          if (prev >= 1) {
+            if (selectedTodoId) {
+              const updated = prev + 1;
+              updateFetchTimeForTodo(selectedTodoId, updated);
+            }
+            return prev - 1;
+          } else {
             clearInterval(intervalRef.current);
             setIsRunning(false);
             setStartTime(0);
             return 0;
           }
-          return prev - 1;
         });
       }, 1000);
     }

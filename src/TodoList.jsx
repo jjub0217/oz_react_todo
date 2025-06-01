@@ -1,12 +1,18 @@
 import Todo from "./Todo";
 
-const TodoList = ({ todoList, removeTodo, handleSelectTodo }) => {
+const TodoList = ({
+  todoList,
+  selectedTodoId,
+  removeTodo,
+  handleSelectTodo,
+}) => {
   return (
     <ul>
       {todoList.map((todo) => (
         <Todo
           key={todo.id}
           todo={todo}
+          selectedTodoId={selectedTodoId}
           removeTodo={removeTodo}
           handleSelectTodo={handleSelectTodo}
         />

@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { formatTime } from "./utils/formatTime";
 
-const StopWatch = ({ selectedTodoId, updateFetchTimeForTodo }) => {
+const StopWatch = ({
+  elapsedTime,
+  setElapsedTime,
+  selectedTodoId,
+  updateFetchTimeForTodo,
+}) => {
   // 1시간 : 3600초 (60초가 60개)
   // 1분 : 60초
 
-  const [elapsedTime, setElapsedTime] = useState(0);
+  // const [elapsedTime, setElapsedTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null); // 타이머 ID 저장용
 

@@ -28,6 +28,9 @@ function App() {
   const { deleteData } = useDelete();
   const { patchData } = useFetch();
 
+  // 보여줄 경과시간
+  const [elapsedTime, setElapsedTime] = useState(0);
+
   const addTodo = async (newTodo) => {
     const { id, ...dataWithoutId } = newTodo;
     const result = await sendData(dataWithoutId);
@@ -67,6 +70,10 @@ function App() {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    setElapsedTime(0);
+  }, [isStopwatch]);
+
   return (
     <>
       <Advice />
@@ -75,16 +82,24 @@ function App() {
       </button>
       {isStopwatch ? (
         <StopWatch
+          elapsedTime={elapsedTime}
+          setElapsedTime={setElapsedTime}
           selectedTodoId={selectedTodoId}
           updateFetchTimeForTodo={updateFetchTimeForTodo}
         />
       ) : (
-        <Timer />
+        <Timer
+          elapsedTime={elapsedTime}
+          setElapsedTime={setElapsedTime}
+          selectedTodoId={selectedTodoId}
+          updateFetchTimeForTodo={updateFetchTimeForTodo}
+        />
       )}
       <TodoInput addTodo={addTodo} />
       {!isLoading && (
         <TodoList
           todoList={todoList}
+          selectedTodoId={selectedTodoId}
           removeTodo={removeTodo}
           handleSelectTodo={handleSelectTodo}
         />

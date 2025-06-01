@@ -1,8 +1,8 @@
 import { formatTime } from "./utils/formatTime";
 
-const Todo = ({ todo, removeTodo, handleSelectTodo }) => {
+const Todo = ({ todo, selectedTodoId, removeTodo, handleSelectTodo }) => {
   return (
-    <li>
+    <li className={selectedTodoId === todo.id ? "selectedTodoId" : ""}>
       <div>
         {todo.content}
         <br />
